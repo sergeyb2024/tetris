@@ -50,7 +50,7 @@
             flex-direction: column;
             align-items: center;
             background: #111;
-            padding: 15px;
+            padding: 10px;
             border-radius: 10px;
             border: 1px solid var(--glow-color);
             box-shadow: 0 0 12px var(--glow-color), inset 0 0 8px var(--glow-color);
@@ -78,14 +78,14 @@
 
         .game-info {
             color: #fff;
-            font-size: 20px;
-            min-width: 200px;
+            font-size: 18px;
+            min-width: 180px;
             text-align: center;
         }
 
         .game-info h2 {
             color: var(--accent-color);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             text-shadow: 0 0 6px var(--accent-color);
         }
 
@@ -93,17 +93,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             border: 1px solid #555;
-            margin: 10px auto;
+            margin: 5px auto;
             background: #000;
             border-radius: 8px;
         }
 
         .controls-info {
-            margin-top: 20px;
-            font-size: 16px;
+            margin-top: 15px;
+            font-size: 14px;
             line-height: 1.6;
             text-align: left;
         }
@@ -115,7 +115,7 @@
             transform: translate(-50%, -50%);
             background: rgba(0,0,0,0.9);
             color: #fff;
-            padding: 30px;
+            padding: 20px;
             border-radius: 12px;
             border: 1px solid var(--glow-color);
             box-shadow: 0 0 20px var(--glow-color);
@@ -137,7 +137,7 @@
         /* Responsive layout for mobile devices */
         @media (max-width: 768px) and (orientation: portrait) {
             .game-container {
-                padding: 10px;
+                padding: 5px;
                 background: none;
                 border: none;
                 box-shadow: none;
@@ -153,10 +153,10 @@
                 justify-content: space-around;
                 align-items: center;
                 width: 100%;
-                padding: 12px 0;
+                padding: 8px 0;
                 background: #111;
                 color: #fff;
-                box-shadow: 0 2px 12px var(--glow-color);
+                box-shadow: 0 2px 10px var(--glow-color);
                 z-index: 10;
                 flex-shrink: 0;
             }
@@ -166,12 +166,12 @@
             }
 
             .mobile-info-bar .label {
-                font-size: 14px;
+                font-size: 12px;
                 color: #aaa;
             }
 
             .mobile-info-bar .value {
-                font-size: 20px;
+                font-size: 16px;
                 font-weight: bold;
                 color: var(--accent-color);
                 text-shadow: 0 0 4px var(--accent-color);
@@ -182,28 +182,28 @@
                 flex-direction: row;
                 align-items: center;
                 justify-content: center;
-                gap: 10px;
-                margin: 10px 0;
+                gap: 8px;
+                margin: 5px 0;
             }
 
             .board-and-next {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 10px;
+                gap: 5px;
             }
 
             #gameCanvas {
-                width: 80vw;
+                width: 75vw;
                 height: auto;
                 aspect-ratio: 10 / 20;
-                max-width: 320px;
-                max-height: 640px;
+                max-width: 280px;
+                max-height: 560px;
             }
 
             .next-piece-container {
-                width: 80px;
-                height: 80px;
+                width: 60px;
+                height: 60px;
                 margin: 0;
             }
 
@@ -212,7 +212,7 @@
                 flex-direction: column;
                 align-items: center;
                 width: 100%;
-                padding: 10px;
+                padding: 5px;
                 box-sizing: border-box;
                 flex-shrink: 0;
             }
@@ -222,24 +222,24 @@
                 align-items: center;
                 justify-content: space-between;
                 width: 100%;
-                max-width: 400px;
-                gap: 10px;
+                max-width: 360px;
+                gap: 8px;
             }
 
             .horizontal-controls button {
-                width: 60px;
-                height: 60px;
-                font-size: 18px;
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
             }
 
             .rotate-button {
-                margin-top: 10px;
+                margin-top: 8px;
             }
 
             .rotate-button button {
-                width: 70px;
-                height: 70px;
-                font-size: 14px;
+                width: 60px;
+                height: 60px;
+                font-size: 12px;
             }
 
             .touch-controls button {
@@ -248,7 +248,7 @@
                 color: #fff;
                 font-weight: bold;
                 border-radius: 50%;
-                box-shadow: 0 0 10px var(--glow-color);
+                box-shadow: 0 0 8px var(--glow-color);
                 user-select: none;
                 transition: all 0.2s ease;
                 display: flex;
@@ -259,7 +259,7 @@
 
             .touch-controls button:active {
                 background: rgba(30, 144, 255, 0.4);
-                box-shadow: 0 0 15px var(--accent-color);
+                box-shadow: 0 0 12px var(--accent-color);
                 transform: scale(0.95);
             }
         }
@@ -289,7 +289,7 @@
                     <div class="board-and-next">
                         <canvas id="gameCanvas" width="300" height="600"></canvas>
                         <div class="next-piece-container">
-                            <canvas id="nextCanvas" width="80" height="80"></canvas>
+                            <canvas id="nextCanvas" width="60" height="60"></canvas>
                         </div>
                     </div>
                     <button id="btn-right" class="touch-controls">→</button>
@@ -332,7 +332,7 @@
         // Game constants
         const BOARD_WIDTH = 10;
         const BOARD_HEIGHT = 20;
-        const BLOCK_SIZE = 30;
+        const BLOCK_SIZE = 28; // Reduced block size for smaller board
         
         // Game state
         let board = [];
@@ -663,11 +663,14 @@
         function resizeCanvas() {
             const canvasElement = document.getElementById('gameCanvas');
             const container = document.querySelector('.board-and-controls');
-            const maxWidth = Math.min(window.innerWidth * 0.8, 320);
+            const maxWidth = Math.min(window.innerWidth * 0.75, 280);
             canvasElement.style.width = `${maxWidth}px`;
             canvasElement.style.height = `${maxWidth * 2}px`;
             canvasElement.width = maxWidth;
             canvasElement.height = maxWidth * 2;
+            const nextCanvasElement = document.getElementById('nextCanvas');
+            nextCanvasElement.width = 60;
+            nextCanvasElement.height = 60;
         }
 
         window.addEventListener('resize', resizeCanvas);
