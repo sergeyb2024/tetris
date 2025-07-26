@@ -2,35 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Tetris Game - Enhanced Visuals</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Tetris Game - Enhanced for iPhone</title>
     <style>
         :root {
-            --glow-color: #c0c0c0; /* Silver glow to match metallic theme */
+            --glow-color: #c0c0c0; /* Silver glow for metallic theme */
+            --accent-color: #1e90ff; /* Blue accent for contrast */
         }
 
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Prevents scrolling/dragging of the page */
-            touch-action: none; /* Disables default touch actions like pinch-zoom */
-        }
-
-        body {
+            overflow: hidden;
+            touch-action: none; /* Disable pinch-zoom and scrolling */
             background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-family: 'Arial', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .main-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            justify-content: space-between;
             width: 100%;
             height: 100%;
         }
@@ -40,89 +41,92 @@
             justify-content: center;
             align-items: center;
             flex-grow: 1;
-            gap: 20px;
-            padding: 10px;
             width: 100%;
             box-sizing: border-box;
         }
 
         .game-container {
             display: flex;
-            justify-content: center;
-            gap: 20px;
+            flex-direction: column;
+            align-items: center;
             background: #111;
-            padding: 20px;
-            border-radius: 15px;
+            padding: 15px;
+            border-radius: 10px;
             border: 1px solid var(--glow-color);
-            box-shadow: 0 0 10px var(--glow-color), inset 0 0 10px var(--glow-color);
-            animation: glow-animation 3s infinite alternate;
+            box-shadow: 0 0 12px var(--glow-color), inset 0 0 8px var(--glow-color);
+            animation: glow-animation 2s infinite alternate;
         }
 
         @keyframes glow-animation {
             from {
-                box-shadow: 0 0 10px var(--glow-color), inset 0 0 10px var(--glow-color);
+                box-shadow: 0 0 12px var(--glow-color), inset 0 0 8px var(--glow-color);
             }
             to {
-                box-shadow: 0 0 25px var(--glow-color), inset 0 0 15px var(--glow-color);
+                box-shadow: 0 0 20px var(--glow-color), inset 0 0 12px var(--glow-color);
             }
         }
-        
+
         canvas {
             background: #000;
-            border-radius: 5px;
+            border-radius: 8px;
         }
-        
+
         #gameCanvas {
             border: 2px solid #555;
-            box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.3);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.4);
         }
-        
+
         .game-info {
             color: #fff;
-            font-size: 18px;
+            font-size: 20px;
             min-width: 200px;
             text-align: center;
         }
-        
+
         .game-info h2 {
-            color: var(--glow-color);
-            margin-bottom: 10px;
-            text-shadow: 0 0 5px var(--glow-color);
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            text-shadow: 0 0 6px var(--accent-color);
         }
-        
+
         .next-piece-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border: 1px solid #555;
             margin: 10px auto;
             background: #000;
-            border-radius: 5px;
+            border-radius: 8px;
         }
-        
+
         .controls-info {
             margin-top: 20px;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 1.6;
             text-align: left;
         }
-        
+
         .game-over {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.9);
             color: #fff;
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 12px;
             border: 1px solid var(--glow-color);
-            box-shadow: 0 0 15px var(--glow-color);
+            box-shadow: 0 0 20px var(--glow-color);
             text-align: center;
             display: none;
             z-index: 100;
+        }
+
+        .game-over h2 {
+            color: var(--accent-color);
+            text-shadow: 0 0 6px var(--accent-color);
         }
 
         /* Mobile UI elements */
@@ -132,24 +136,12 @@
 
         /* Responsive layout for mobile devices */
         @media (max-width: 768px) and (orientation: portrait) {
-            .main-wrapper {
-                justify-content: space-between;
-                gap: 0;
-            }
-
             .game-container {
                 padding: 10px;
                 background: none;
                 border: none;
                 box-shadow: none;
                 animation: none;
-            }
-
-            .game-area {
-                flex-direction: row;
-                align-items: stretch;
-                padding: 0;
-                gap: 0;
             }
 
             .desktop-info {
@@ -161,24 +153,28 @@
                 justify-content: space-around;
                 align-items: center;
                 width: 100%;
-                padding: 10px 0;
+                padding: 12px 0;
                 background: #111;
                 color: #fff;
-                box-shadow: 0 2px 10px var(--glow-color);
+                box-shadow: 0 2px 12px var(--glow-color);
                 z-index: 10;
                 flex-shrink: 0;
             }
+
             .mobile-info-bar > div {
                 text-align: center;
             }
+
             .mobile-info-bar .label {
-                font-size: 12px;
+                font-size: 14px;
                 color: #aaa;
             }
+
             .mobile-info-bar .value {
-                font-size: 18px;
+                font-size: 20px;
                 font-weight: bold;
-                color: var(--glow-color);
+                color: var(--accent-color);
+                text-shadow: 0 0 4px var(--accent-color);
             }
 
             .board-and-next {
@@ -186,79 +182,84 @@
                 flex-direction: column;
                 align-items: center;
                 gap: 10px;
-                margin-top: 10px;
+                margin: 10px 0;
             }
-            
+
             #gameCanvas {
-                width: 60vw;
-                height: 120vw;
-                max-width: 300px;
-                max-height: 600px;
+                width: 90vw;
+                height: auto;
+                aspect-ratio: 10 / 20;
+                max-width: 360px;
             }
 
             .next-piece-container {
-                width: 20vw;
-                height: 20vw;
-                max-width: 80px;
-                max-height: 80px;
+                width: 80px;
+                height: 80px;
                 margin: 0;
             }
 
             .touch-controls {
                 display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
+                justify-content: space-between;
                 align-items: center;
                 width: 100%;
-                flex-grow: 1;
-                padding-bottom: 20px;
+                padding: 15px;
                 box-sizing: border-box;
-            }
-            
-            .side-control {
-                flex-grow: 1;
-                width: 20%;
+                flex-shrink: 0;
             }
 
-            .center-area {
+            .d-pad {
+                display: grid;
+                grid-template-areas: ". up ."
+                                    "left . right"
+                                    ". down .";
+                gap: 10px;
+            }
+
+            .d-pad button {
+                width: 60px;
+                height: 60px;
+                font-size: 18px;
+            }
+
+            #btn-left { grid-area: left; }
+            #btn-right { grid-area: right; }
+            #btn-up { grid-area: up; }
+            #btn-down { grid-area: down; }
+
+            .action-buttons {
                 display: flex;
                 flex-direction: column;
-                align-items: center;
-                justify-content: center;
+                gap: 10px;
             }
 
-            .bottom-controls {
-                display: flex;
-                justify-content: center;
-                gap: 20px;
-                width: 100%;
-                margin-top: 20px;
+            .action-buttons button {
+                width: 70px;
+                height: 70px;
+                font-size: 14px;
             }
 
             .touch-controls button {
-                background: rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.15);
                 border: 1px solid var(--glow-color);
-                color: white;
-                font-size: 20px;
+                color: #fff;
                 font-weight: bold;
                 border-radius: 50%;
-                box-shadow: 0 0 8px var(--glow-color);
-                width: 70px;
-                height: 70px;
+                box-shadow: 0 0 10px var(--glow-color);
                 user-select: none;
                 transition: all 0.2s ease;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                touch-action: manipulation; /* Optimize touch */
             }
+
             .touch-controls button:active {
-                background: rgba(192, 192, 192, 0.3);
+                background: rgba(30, 144, 255, 0.4);
+                box-shadow: 0 0 15px var(--accent-color);
                 transform: scale(0.95);
             }
-            
-            #btn-drop {
-                width: 80px;
-                height: 80px;
-            }
         }
-
     </style>
 </head>
 <body>
@@ -279,42 +280,42 @@
         </div>
 
         <div class="game-area">
-            <div id="btn-left" class="side-control"></div>
-            
-            <div class="center-area">
-                <div class="game-container">
-                    <div class="board-and-next">
-                        <canvas id="gameCanvas" width="300" height="600"></canvas>
-                        <div class="next-piece-container">
-                            <canvas id="nextCanvas" width="80" height="80"></canvas>
-                        </div>
+            <div class="game-container">
+                <div class="board-and-next">
+                    <canvas id="gameCanvas" width="300" height="600"></canvas>
+                    <div class="next-piece-container">
+                        <canvas id="nextCanvas" width="80" height="80"></canvas>
                     </div>
-                    
-                    <div class="game-info desktop-info">
-                        <h2>TETRIS</h2>
-                        <div>Score: <span id="score">0</span></div>
-                        <div>Lines: <span id="lines">0</span></div>
-                        <div>Level: <span id="level">1</span></div>
-                        <h3>Next:</h3>
-                        <div class="next-piece-container-desktop">
-                        </div>
-                        <div class="controls-info">
-                            <h3>Controls:</h3>
-                            <div>← → Move</div>
-                            <div>↓ Soft Drop</div>
-                            <div>↑ Rotate</div>
-                            <div>Space Hard Drop</div>
-                            <div>Enter Start/Pause</div>
-                        </div>
+                </div>
+                
+                <div class="game-info desktop-info">
+                    <h2>TETRIS</h2>
+                    <div>Score: <span id="score">0</span></div>
+                    <div>Lines: <span id="lines">0</span></div>
+                    <div>Level: <span id="level">1</span></div>
+                    <h3>Next:</h3>
+                    <div class="next-piece-container-desktop">
+                    </div>
+                    <div class="controls-info">
+                        <h3>Controls:</h3>
+                        <div>← → Move</div>
+                        <div>↓ Soft Drop</div>
+                        <div>↑ Rotate</div>
+                        <div>Space Hard Drop</div>
+                        <div>Enter Start/Pause</div>
                     </div>
                 </div>
             </div>
-
-            <div id="btn-right" class="side-control"></div>
         </div>
         
         <div class="touch-controls">
-            <div class="bottom-controls">
+            <div class="d-pad">
+                <button id="btn-up">↻</button>
+                <button id="btn-left">←</button>
+                <button id="btn-right">→</button>
+                <button id="btn-down">↓</button>
+            </div>
+            <div class="action-buttons">
                 <button id="btn-rotate">ROTATE</button>
                 <button id="btn-drop">DROP</button>
             </div>
@@ -324,7 +325,7 @@
     <div class="game-over" id="gameOver">
         <h2>Game Over</h2>
         <p>Final Score: <span id="finalScore">0</span></p>
-        <p>Press Enter or tap to restart</p>
+        <p>Tap or press Enter to restart</p>
     </div>
 
     <script>
@@ -513,12 +514,15 @@
         }
         
         function drawBoard() {
+            const scale = canvas.width / (BOARD_WIDTH * BLOCK_SIZE);
+            const scaledBlockSize = BLOCK_SIZE * scale;
+            
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             for (let y = 0; y < BOARD_HEIGHT; y++) {
                 for (let x = 0; x < BOARD_WIDTH; x++) {
                     if (board[y][x]) {
-                        drawBlock(ctx, x, y, COLORS[board[y][x]]);
+                        drawBlock(ctx, x, y, COLORS[board[y][x]], scaledBlockSize);
                     }
                 }
             }
@@ -527,7 +531,7 @@
                 for (let y = 0; y < matrix.length; y++) {
                     for (let x = 0; x < matrix[y].length; x++) {
                         if (matrix[y][x]) {
-                            drawBlock(ctx, currentPiece.x + x, currentPiece.y + y, COLORS[currentPiece.shape]);
+                            drawBlock(ctx, currentPiece.x + x, currentPiece.y + y, COLORS[currentPiece.shape], scaledBlockSize);
                         }
                     }
                 }
@@ -539,8 +543,7 @@
             nextCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
             if (nextPiece) {
                 const matrix = nextPiece.matrix;
-                const isMobile = window.innerWidth <= 768;
-                const blockSize = isMobile ? (nextCanvas.width / 4) : 20;
+                const blockSize = nextCanvas.width / 4;
                 const pieceWidth = 4;
                 const pieceHeight = 4;
                 const offsetX = (nextCanvas.width - pieceWidth * blockSize) / 2;
@@ -563,7 +566,7 @@
             lastTime = time;
             if (gameRunning) {
                 dropCounter += deltaTime;
-                if (dropCounter > dropInterval) {
+                if (dropInterval > 0 && dropCounter > dropInterval) {
                     if (!movePiece(0, 1)) {
                         lockPiece();
                     }
@@ -635,18 +638,47 @@
             }
         });
 
-        document.getElementById('btn-left').addEventListener('click', () => handleUserAction('left'));
-        document.getElementById('btn-right').addEventListener('click', () => handleUserAction('right'));
-        document.getElementById('btn-rotate').addEventListener('click', () => handleUserAction('rotate'));
-        document.getElementById('btn-drop').addEventListener('click', () => handleUserAction('drop'));
-        
-        document.getElementById('gameOver').addEventListener('click', () => {
+        // Touch event handlers
+        function addTouchEvents(buttonId, action) {
+            const button = document.getElementById(buttonId);
+            button.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                handleUserAction(action);
+            });
+            button.addEventListener('touchend', (e) => {
+                e.preventDefault();
+            });
+        }
+
+        addTouchEvents('btn-left', 'left');
+        addTouchEvents('btn-right', 'right');
+        addTouchEvents('btn-up', 'rotate');
+        addTouchEvents('btn-down', 'down');
+        addTouchEvents('btn-rotate', 'rotate');
+        addTouchEvents('btn-drop', 'drop');
+
+        document.getElementById('gameOver').addEventListener('touchstart', (e) => {
+            e.preventDefault();
             if (gameOver) startGame();
         });
-        
+
+        // --- Responsive Sizing ---
+        function resizeCanvas() {
+            const canvasElement = document.getElementById('gameCanvas');
+            const container = canvasElement.parentElement;
+            const maxWidth = Math.min(container.clientWidth * 0.9, 360);
+            canvasElement.style.width = `${maxWidth}px`;
+            canvasElement.style.height = `${maxWidth * 2}px`;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('orientationchange', resizeCanvas);
+
         // Initialize game
         startGame();
         gameLoop();
+        // Initial resize
+        resizeCanvas();
     </script>
 </body>
 </html>
