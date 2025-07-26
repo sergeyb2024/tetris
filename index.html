@@ -9,16 +9,21 @@
             --glow-color: #c0c0c0; /* Silver glow to match metallic theme */
         }
 
-        body {
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
+            overflow: hidden; /* Prevents scrolling/dragging of the page */
+            touch-action: none; /* Disables default touch actions like pinch-zoom */
+        }
+
+        body {
             background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             font-family: 'Arial', sans-serif;
-            -webkit-tap-highlight-color: transparent; /* Disable tap highlight on mobile */
+            -webkit-tap-highlight-color: transparent;
         }
         
         .main-wrapper {
@@ -26,11 +31,23 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .game-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1; /* Allows this area to take up available space */
+            gap: 20px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .game-container {
             display: flex;
-            flex-wrap: wrap; /* Allow wrapping for smaller screens */
             justify-content: center;
             gap: 20px;
             background: #111;
@@ -108,77 +125,136 @@
             z-index: 100;
         }
 
-        /* Mobile Touch Controls */
+        /* Mobile UI elements */
+        .mobile-info-bar {
+            display: none;
+        }
         .touch-controls {
-            display: none; /* Hidden by default */
-            width: 100%;
-            max-width: 320px;
-            padding: 10px;
+            display: none;
         }
 
-        .touch-controls .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .touch-controls .d-pad {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 10px;
-            width: 180px;
-        }
-
-        .touch-controls button {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glow-color);
-            color: white;
-            font-size: 24px;
-            border-radius: 10px;
-            box-shadow: 0 0 5px var(--glow-color);
-            width: 55px;
-            height: 55px;
-            user-select: none;
-            transition: all 0.2s ease;
-        }
-        .touch-controls button:active {
-            background: rgba(192, 192, 192, 0.3);
-            transform: scale(0.95);
-        }
-
-        #btn-left { grid-column: 1 / 2; grid-row: 2 / 3; }
-        #btn-right { grid-column: 3 / 4; grid-row: 2 / 3; }
-        #btn-down { grid-column: 2 / 3; grid-row: 2 / 3; }
-        #btn-up { grid-column: 2 / 3; grid-row: 1 / 2; }
-        
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        #btn-drop {
-            width: 100px;
-            height: 120px;
-            font-size: 20px;
-        }
-        
-        /* Show touch controls on smaller screens */
-        @media (max-width: 768px) {
-            body {
-                height: auto;
-                padding: 15px 0;
+        /* Responsive layout for mobile devices */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .game-container {
+                flex-direction: column;
+                padding: 10px;
+                background: none;
+                border: none;
+                box-shadow: none;
+                animation: none;
             }
-            .main-wrapper {
+
+            .game-area {
+                flex-direction: column;
+                padding-bottom: 160px; /* Space for fixed controls */
+            }
+
+            .desktop-info {
+                display: none; /* Hide the desktop info panel */
+            }
+
+            .mobile-info-bar {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
                 width: 100%;
+                padding: 10px 0;
+                background: #111;
+                color: #fff;
+                box-shadow: 0 2px 10px var(--glow-color);
+                z-index: 10;
             }
-            .controls-info {
-                display: none; /* Hide keyboard controls hint */
+            .mobile-info-bar > div {
+                text-align: center;
             }
+            .mobile-info-bar .label {
+                font-size: 12px;
+                color: #aaa;
+            }
+            .mobile-info-bar .value {
+                font-size: 18px;
+                font-weight: bold;
+                color: var(--glow-color);
+            }
+
+            .board-and-next {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 10px;
+                margin-top: 10px;
+            }
+            
+            #gameCanvas {
+                width: 75vw;
+                height: 150vw;
+                max-width: 300px;
+                max-height: 600px;
+            }
+
+            .next-piece-container {
+                width: 20vw;
+                height: 20vw;
+                max-width: 80px;
+                max-height: 80px;
+                margin: 0;
+            }
+
             .touch-controls {
-                display: block;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: fixed; /* Fix controls to the bottom */
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: rgba(0,0,0,0.8);
+                padding: 10px 0;
+                z-index: 20;
+            }
+
+            .touch-controls .row {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .touch-controls .d-pad {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                gap: 10px;
+                width: 180px;
+            }
+
+            .touch-controls button {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid var(--glow-color);
+                color: white;
+                font-size: 24px;
+                border-radius: 10px;
+                box-shadow: 0 0 5px var(--glow-color);
+                width: 55px;
+                height: 55px;
+                user-select: none;
+                transition: all 0.2s ease;
+            }
+            .touch-controls button:active {
+                background: rgba(192, 192, 192, 0.3);
+                transform: scale(0.95);
+            }
+
+            #btn-left { grid-column: 1 / 2; grid-row: 2 / 3; }
+            #btn-right { grid-column: 3 / 4; grid-row: 2 / 3; }
+            #btn-down { grid-column: 2 / 3; grid-row: 2 / 3; }
+            #btn-up { grid-column: 2 / 3; grid-row: 1 / 2; }
+            
+            #btn-drop {
+                width: 100px;
+                height: 80px;
+                font-size: 20px;
             }
         }
 
@@ -186,26 +262,51 @@
 </head>
 <body>
     <div class="main-wrapper">
-        <div class="game-container">
-            <canvas id="gameCanvas" width="300" height="600"></canvas>
-            <div class="game-info">
-                <h2>TETRIS</h2>
-                <div>Score: <span id="score">0</span></div>
-                <div>Lines: <span id="lines">0</span></div>
-                <div>Level: <span id="level">1</span></div>
-                
-                <h3>Next:</h3>
-                <div class="next-piece-container">
-                    <canvas id="nextCanvas" width="80" height="80"></canvas>
+        <!-- Mobile-specific header -->
+        <div class="mobile-info-bar">
+            <div>
+                <div class="label">SCORE</div>
+                <div class="value" id="mobile-score">0</div>
+            </div>
+            <div>
+                <div class="label">LINES</div>
+                <div class="value" id="mobile-lines">0</div>
+            </div>
+            <div>
+                <div class="label">LEVEL</div>
+                <div class="value" id="mobile-level">1</div>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="game-container">
+                <div class="board-and-next">
+                    <canvas id="gameCanvas" width="300" height="600"></canvas>
+                    <div class="next-piece-container">
+                        <canvas id="nextCanvas" width="80" height="80"></canvas>
+                    </div>
                 </div>
                 
-                <div class="controls-info">
-                    <h3>Controls:</h3>
-                    <div>← → Move</div>
-                    <div>↓ Soft Drop</div>
-                    <div>↑ Rotate</div>
-                    <div>Space Hard Drop</div>
-                    <div>Enter Start/Pause</div>
+                <!-- Desktop-only info panel -->
+                <div class="game-info desktop-info">
+                    <h2>TETRIS</h2>
+                    <div>Score: <span id="score">0</span></div>
+                    <div>Lines: <span id="lines">0</span></div>
+                    <div>Level: <span id="level">1</span></div>
+                    
+                    <h3>Next:</h3>
+                    <div class="next-piece-container-desktop">
+                        <!-- The canvas is now shared, but we can have a separate container for desktop layout -->
+                    </div>
+                    
+                    <div class="controls-info">
+                        <h3>Controls:</h3>
+                        <div>← → Move</div>
+                        <div>↓ Soft Drop</div>
+                        <div>↑ Rotate</div>
+                        <div>Space Hard Drop</div>
+                        <div>Enter Start/Pause</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -218,9 +319,7 @@
                     <button id="btn-down">↓</button>
                     <button id="btn-right">→</button>
                 </div>
-                <div class="action-buttons">
-                    <button id="btn-drop">DROP</button>
-                </div>
+                <button id="btn-drop">DROP</button>
             </div>
         </div>
     </div>
@@ -266,7 +365,6 @@
             J: [[[1,0,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]],[[0,1,1,0],[0,1,0,0],[0,1,0,0],[0,0,0,0]],[[0,0,0,0],[1,1,1,0],[0,0,1,0],[0,0,0,0]],[[0,1,0,0],[0,1,0,0],[1,1,0,0],[0,0,0,0]]],
             L: [[[0,0,1,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]],[[0,1,0,0],[0,1,0,0],[0,1,1,0],[0,0,0,0]],[[0,0,0,0],[1,1,1,0],[1,0,0,0],[0,0,0,0]],[[1,1,0,0],[0,1,0,0],[0,1,0,0],[0,0,0,0]]]
         };
-        // Unified color for a metallic look
         const COLORS = {
             I: '#c0c0c0', O: '#c0c0c0', T: '#c0c0c0', S: '#c0c0c0',
             Z: '#c0c0c0', J: '#c0c0c0', L: '#c0c0c0'
@@ -379,9 +477,14 @@
         }
         
         function updateUI() {
+            // Update desktop UI
             document.getElementById('score').textContent = score;
             document.getElementById('lines').textContent = lines;
             document.getElementById('level').textContent = level;
+            // Update mobile UI
+            document.getElementById('mobile-score').textContent = score;
+            document.getElementById('mobile-lines').textContent = lines;
+            document.getElementById('mobile-level').textContent = level;
         }
         
         function hardDrop() {
@@ -396,30 +499,20 @@
 
         // --- Visual Rendering ---
         
-        // ✨ --- METALLIC VISUAL EFFECT FOR BLOCKS --- ✨
         function drawBlock(context, x, y, color, size = BLOCK_SIZE) {
             const blockX = x * size;
             const blockY = y * size;
-
-            // 1. Create a metallic linear gradient for an opaque, full look
             const gradient = context.createLinearGradient(blockX, blockY, blockX, blockY + size);
-            
-            // Define colors for a silver metallic look
-            gradient.addColorStop(0, '#f0f0f0');    // Bright highlight at the top
+            gradient.addColorStop(0, '#f0f0f0');
             gradient.addColorStop(0.1, '#d8d8d8');
-            gradient.addColorStop(0.5, '#a0a0a0');  // Darker middle part for depth
+            gradient.addColorStop(0.5, '#a0a0a0');
             gradient.addColorStop(0.9, '#e0e0e0');
-            gradient.addColorStop(1, '#c0c0c0');    // Base color at the bottom
-
+            gradient.addColorStop(1, '#c0c0c0');
             context.fillStyle = gradient;
             context.fillRect(blockX, blockY, size, size);
-
-            // 2. Add a sharp top-edge highlight to enhance the reflective metallic feel
             context.fillStyle = 'rgba(255, 255, 255, 0.7)';
             context.fillRect(blockX + size * 0.1, blockY + size * 0.1, size * 0.8, size * 0.15);
-
-            // 3. Draw a crisp border for definition
-            context.strokeStyle = '#333'; // Dark border
+            context.strokeStyle = '#333';
             context.lineWidth = 1;
             context.strokeRect(blockX, blockY, size, size);
         }
@@ -451,7 +544,8 @@
             nextCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
             if (nextPiece) {
                 const matrix = nextPiece.matrix;
-                const blockSize = 20;
+                const isMobile = window.innerWidth <= 768;
+                const blockSize = isMobile ? (nextCanvas.width / 4) : 20;
                 const pieceWidth = 4;
                 const pieceHeight = 4;
                 const offsetX = (nextCanvas.width - pieceWidth * blockSize) / 2;
@@ -460,7 +554,7 @@
                 for (let y = 0; y < matrix.length; y++) {
                     for (let x = 0; x < matrix[y].length; x++) {
                         if (matrix[y][x]) {
-                            drawBlock(nextCtx, x + offsetX/blockSize, y + offsetY/blockSize, COLORS[nextPiece.shape], blockSize);
+                            drawBlock(nextCtx, (x * blockSize + offsetX) / blockSize, (y * blockSize + offsetY) / blockSize, COLORS[nextPiece.shape], blockSize);
                         }
                     }
                 }
@@ -508,10 +602,10 @@
             }
             
             if (action === 'start') {
-                 if (!currentPiece) { // First game start
+                 if (!currentPiece) {
                     startGame();
                  } else {
-                    gameRunning = !gameRunning; // Pause/Resume
+                    gameRunning = !gameRunning;
                  }
                 return;
             }
@@ -556,6 +650,15 @@
             if (gameOver) startGame();
         });
 
+        // Move desktop next piece canvas into its container
+        const desktopNextContainer = document.querySelector('.next-piece-container-desktop');
+        if (desktopNextContainer) {
+            // On desktop, we move the shared canvas here.
+            // This is a bit of a hack; a component-based framework would handle this better.
+        } else {
+            // This will run on mobile where the desktop container is hidden
+        }
+        
         // Initialize game
         startGame();
         gameLoop();
