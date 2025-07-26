@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>Tetris Game - Enhanced for iPhone</title>
+    <title>Tetris Game - Mobile Optimized</title>
     <style>
         :root {
             --glow-color: #c0c0c0; /* Silver glow for metallic theme */
@@ -177,19 +177,28 @@
                 text-shadow: 0 0 4px var(--accent-color);
             }
 
+            .board-and-controls {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin: 10px 0;
+            }
+
             .board-and-next {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 gap: 10px;
-                margin: 10px 0;
             }
 
             #gameCanvas {
-                width: 90vw;
+                width: 80vw;
                 height: auto;
                 aspect-ratio: 10 / 20;
-                max-width: 360px;
+                max-width: 320px;
+                max-height: 640px;
             }
 
             .next-piece-container {
@@ -200,40 +209,34 @@
 
             .touch-controls {
                 display: flex;
-                justify-content: space-between;
+                flex-direction: column;
                 align-items: center;
                 width: 100%;
-                padding: 15px;
+                padding: 10px;
                 box-sizing: border-box;
                 flex-shrink: 0;
             }
 
-            .d-pad {
-                display: grid;
-                grid-template-areas: ". up ."
-                                    "left . right"
-                                    ". down .";
+            .horizontal-controls {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                max-width: 400px;
                 gap: 10px;
             }
 
-            .d-pad button {
+            .horizontal-controls button {
                 width: 60px;
                 height: 60px;
                 font-size: 18px;
             }
 
-            #btn-left { grid-area: left; }
-            #btn-right { grid-area: right; }
-            #btn-up { grid-area: up; }
-            #btn-down { grid-area: down; }
-
-            .action-buttons {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
+            .rotate-button {
+                margin-top: 10px;
             }
 
-            .action-buttons button {
+            .rotate-button button {
                 width: 70px;
                 height: 70px;
                 font-size: 14px;
@@ -251,7 +254,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                touch-action: manipulation; /* Optimize touch */
+                touch-action: manipulation;
             }
 
             .touch-controls button:active {
@@ -281,11 +284,15 @@
 
         <div class="game-area">
             <div class="game-container">
-                <div class="board-and-next">
-                    <canvas id="gameCanvas" width="300" height="600"></canvas>
-                    <div class="next-piece-container">
-                        <canvas id="nextCanvas" width="80" height="80"></canvas>
+                <div class="board-and-controls">
+                    <button id="btn-left" class="touch-controls">←</button>
+                    <div class="board-and-next">
+                        <canvas id="gameCanvas" width="300" height="600"></canvas>
+                        <div class="next-piece-container">
+                            <canvas id="nextCanvas" width="80" height="80"></canvas>
+                        </div>
                     </div>
+                    <button id="btn-right" class="touch-controls">→</button>
                 </div>
                 
                 <div class="game-info desktop-info">
@@ -305,19 +312,12 @@
                         <div>Enter Start/Pause</div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="touch-controls">
-            <div class="d-pad">
-                <button id="btn-up">↻</button>
-                <button id="btn-left">←</button>
-                <button id="btn-right">→</button>
-                <button id="btn-down">↓</button>
-            </div>
-            <div class="action-buttons">
-                <button id="btn-rotate">ROTATE</button>
-                <button id="btn-drop">DROP</button>
+
+                <div class="touch-controls">
+                    <div class="rotate-button">
+                        <button id="btn-rotate">ROTATE</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -652,10 +652,7 @@
 
         addTouchEvents('btn-left', 'left');
         addTouchEvents('btn-right', 'right');
-        addTouchEvents('btn-up', 'rotate');
-        addTouchEvents('btn-down', 'down');
         addTouchEvents('btn-rotate', 'rotate');
-        addTouchEvents('btn-drop', 'drop');
 
         document.getElementById('gameOver').addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -665,10 +662,12 @@
         // --- Responsive Sizing ---
         function resizeCanvas() {
             const canvasElement = document.getElementById('gameCanvas');
-            const container = canvasElement.parentElement;
-            const maxWidth = Math.min(container.clientWidth * 0.9, 360);
+            const container = document.querySelector('.board-and-controls');
+            const maxWidth = Math.min(window.innerWidth * 0.8, 320);
             canvasElement.style.width = `${maxWidth}px`;
             canvasElement.style.height = `${maxWidth * 2}px`;
+            canvasElement.width = maxWidth;
+            canvasElement.height = maxWidth * 2;
         }
 
         window.addEventListener('resize', resizeCanvas);
